@@ -1,117 +1,70 @@
 <?php
 class User
 {
-	private $id;
-	private $login;
-	private $password;
-	private $email;
-	private $avatar;
-	private $date;
-	private $last_date;
 
+
+	// Properties
+	private $id;
+	private $id_adress;
+	private $email;
+	private $hash;
+	private $name;
+	private $surname;
+	private $status;
+	private $date_registration;
+	private $date_connection;
+	private $db;
+
+
+	// Constructor
+	public function __construct($db)
+	{
+		$this -> db = $db;
+	}
+
+
+	// Getters
 	public function getId()
 	{
-		return $this->id;
+		return $this -> id;
 	}
-	public function getLogin()
+	public function getIdAdress()
 	{
-		return $this->login;
-	}
-	public function getHash()
-	{
-		return $this->password;
+		return $this -> id_adress;
 	}
 	public function getEmail()
 	{
-		return $this->email;
+		return $this -> email;
 	}
-	public function getAvatar()
+	public function getHash()
 	{
-		return $this->avatar;
+		return $this -> hash;
 	}
-	public function getDate()
+	public function getName()
 	{
-		return $this->date;
+		return $this -> name;
 	}
-	public function getLastDate()
+	public function getSurname()
 	{
-		return $this->last_date;
+		return $this -> surname;
+	}
+	public function getStatus()
+	{
+		return $this -> status;
+	}
+	public function getDateRegistration()
+	{
+		return $this -> date_registration;
+	}
+	public function getDateConnection()
+	{
+		return $this -> date_connection;
 	}
 
-	public function setLogin($login)
-	{
-		if (strlen($login) > 3 && strlen($login) < 32)
-		{
-			$this->login = $login;
-			return true;
-		}
-		else
-		{
-			return "Login incorrect";
-		}
-	}
-	public function setEmail($email)
-	{
-		if (strlen($email) > 3 && strlen($email) < 52)
-		{
-			$this->email = $email;
-			return true;
-		}
-		else
-		{
-			return "Email incorrect";
-		}
-	}
-	public function editPassword($password1, $password2)
-	{
-		if (strlen($password) > 5)
-		{
-			if ($password1 == $password2)
-			{
-				$this->password = password_hash($password1, PASSWORD_BCRYPT, array("cost"=>10));
-				return true;
-			}
-			else
-			{
-				return "Les mots de passe ne correspondent pas";
-			}
-		}
-		else
-		{
-			return "Password trop court";
-		}
-	}
-	public function setPassword($password1, $password2)
-	{
-		if (strlen($password1) > 5)
-		{
-			if ($password1 == $password2)
-			{
-				$this->password = password_hash($password1, PASSWORD_BCRYPT, array("cost"=>10));
-				return true;
-			}
-		}
-		else
-		{
-			return "Mot de passe trop court";
-		}
-	}
-	public function verifPassword($password)
-	{
-		return (password_verify($password, $this->password));
-	}
-	public function setAvatar($avatar)
-	{
-		if (filter_var($avatar, FILTER_VALIDATE_URL))
-		{
-			$this->avatar = $avatar;
-			return true;
-		}
-		else
-		{
-			return "URL incorrecte";
-		}
-	}
-}
 
+	// Setters
+	public function setIdAdress($id_adress)
+	{
+
+	}
 ?>
