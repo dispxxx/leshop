@@ -3,9 +3,9 @@
 // ________ TOOLS ________
 	session_start();
 
-	$db = mysqli_connect('192.168.1.23', 'fennec', 'fennec', 'forum');
-/*  				DB HOLLUX
-    $db = mysqli_connect('localhost', 'root', '', 'news');*/ 
+	$db = new PDO("mysql:host=192.168.1.51;dbname=leshop", '','');
+/*  				DB HOLLUX */
+/*  $db = new PDO("mysql:host=localhost;dbname=leshop", '', '');
 
 	if ( $db === false )
 		die(mysqli_connect_error());
