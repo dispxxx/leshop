@@ -123,10 +123,10 @@ class UserManager
 	{
 		if(isset($_SESSION['login']))
 		{
-			$mysql_last_date = mysqli_query("SELECT last_date FROM user WHERE login=".$_SESSION['login']); 
-			$reponse_date = mysqli_fetch_assoc($mysql_last_date); 
-			$_SESSION["last_date"] = $reponse_date["last_date"]; 
-			mysqli_query("UPDATE user SET last_date='".date("U")."' WHERE login=".$_SESSION['login']); 
+			$mysql_last_date = mysqli_query("SELECT last_date FROM user WHERE login=".$_SESSION['login']);
+			$reponse_date = mysqli_fetch_assoc($mysql_last_date);
+			$_SESSION["last_date"] = $reponse_date["last_date"];
+			mysqli_query("UPDATE user SET last_date='".date("U")."' WHERE login=".$_SESSION['login']);
 		}
 	}
 	public function findByLogin($login)
@@ -141,7 +141,7 @@ class UserManager
 				$user = mysqli_fetch_object($res, "User");
 				if ($user) {
 					return $user;
-				}					
+				}
 				else
 					return "User not found";
 			}

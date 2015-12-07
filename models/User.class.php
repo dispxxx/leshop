@@ -6,6 +6,7 @@ class User
 	// Properties
 	private $id;
 	private $id_adress;
+	private $adress;
 	private $email;
 	private $hash;
 	private $name;
@@ -63,7 +64,7 @@ class User
 
 
 	// Setters
-	public function setIdAdress($id_adress)
+	public function setAdress(Adress $adress)
 	{
 
 	}
