@@ -1,0 +1,112 @@
+https://docs.google.com/drawings/d/1Itq8nvKRUjJPHtKsOeMTeUNL663NdIfy7dNwayp66Vw/edit?usp=sharing
+
+-- phpMyAdmin SQL Dump
+-- version 4.1.4
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 30, 2015 at 12:10 PM
+-- Server version: 5.6.15-log
+-- PHP Version: 5.5.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `forum`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE IF NOT EXISTS `login` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `login` varchar(15) COLLATE utf8_bin NOT NULL,
+  `password` varchar(255) COLLATE utf8_bin NOT NULL,
+  `email` varchar(63) COLLATE utf8_bin NOT NULL,
+  `avatar` varchar(127) COLLATE utf8_bin NOT NULL DEFAULT 'http://www.zoo-palmyre.fr/sites/default/files/styles/sans_cadre/public/couverture_animaux/c_img_0345_0.jpg?itok=sHo6ALdK',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last-date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `p-message`
+--
+
+CREATE TABLE IF NOT EXISTS `p-message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id-author` int(11) NOT NULL,
+  `title` varchar(63) COLLATE utf8_bin NOT NULL,
+  `content` varchar(2047) COLLATE utf8_bin NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post`
+--
+
+CREATE TABLE IF NOT EXISTS `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id-topic` int(11) NOT NULL,
+  `id-author` int(11) NOT NULL,
+  `content` varchar(2047) COLLATE utf8_bin NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rubrique`
+--
+
+CREATE TABLE IF NOT EXISTS `rubrique` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_author` int(11) NOT NULL,
+  `name` varchar(31) COLLATE utf8_bin NOT NULL,
+  `description` varchar(255) COLLATE utf8_bin NOT NULL,
+  `image` varchar(255) COLLATE utf8_bin NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sous-rubrique`
+--
+
+CREATE TABLE IF NOT EXISTS `sous-rubrique` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id-author` int(11) NOT NULL,
+  `id-rubrique` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8_bin NOT NULL,
+  `image` varchar(255) COLLATE utf8_bin NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `topic`
+--
+
+CREATE TABLE IF NOT EXISTS `topic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id-sous-rubrique` int(11) NOT NULL,
+  `id-author` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;

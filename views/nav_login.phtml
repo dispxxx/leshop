@@ -1,0 +1,15 @@
+<li class="liNav2 col-sm-1">
+    <button class="buttonPrincipal">
+       <a href="?page=profil&id=<?=$_SESSION['id']?>" class="aNav"><?php echo $currentUser->getLogin(); ?></a> 
+    </button>
+</li>
+<li class="liNav2 col-sm-1">
+    <button class="buttonPrincipal">
+       <a href="?page=mp" class="aNav">Mp</a> 
+    </button>
+</li>
+<li class="liNav2 col-sm-1">
+    <button class="buttonPrincipal">
+       <a href="?page=logout&action=logout" class="aNav">Logout</a> 
+    </button>
+</li>
