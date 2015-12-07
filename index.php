@@ -5,7 +5,7 @@
 
 	$db = new PDO("mysql:host=192.168.1.51;dbname=leshop", 'lechat','gochat');
 /*  				DB HOLLUX */
-/*  $db = new PDO("mysql:host=localhost;dbname=leshop", '', '');
+/*  $db = new PDO("mysql:host=localhost;dbname=leshop", '', '');*/
 
 	if ( $db === false )
 		die(mysqli_connect_error());
@@ -23,17 +23,9 @@
 
 // ________ HUB ________
 	$chemins = array(
-		'register', 'login', 'profil', 'edit_profil',
-		'home', 'rubrique', 'sous_rubrique', 'topic',
-		'create_rubrique', 'edit_rubrique', 'create_sous_rubrique', 'edit_sous_rubrique',
-		'create_topic', 'edit_topic', 'create_post', 'edit_post',
-		'error_404');
+		'register', 'login', 'profil','home','error_404');
 	$traitements = array(
-		'register'=>'user', 'login'=>'user', 'logout'=>'user', 'edit_profil'=>'user',
-		'create_rubrique'=>'rubrique', 'edit_rubrique'=>'rubrique',
-		'create_sous_rubrique'=>'sous_rubrique', 'edit_sous_rubrique'=>'sous_rubrique',
-		'create_topic'=>'topic', 'edit_topic'=>'topic',
-		'create_post'=>'post', 'edit_post'=>'post');
+		'register'=>'user', 'login'=>'user', 'logout'=>'user');
 	// Note : les MP ne sont pas encore implémentés.
 
 	$page = 'home';
@@ -54,7 +46,5 @@
 			$page = $_GET['page'];
 		}
 	}
-
 	require('apps/skel.php');
-
 ?>
