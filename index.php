@@ -5,7 +5,7 @@
 
 	$db = new PDO("mysql:host=192.168.1.51;dbname=leshop", 'lechat','gochat');
 /*  				DB HOLLUX */
-/*  $db = new PDO("mysql:host=localhost;dbname=leshop", '', '');
+/*  $db = new PDO("mysql:host=localhost;dbname=leshop", '', '');*/
 
 	if ( $db === false )
 		die(mysqli_connect_error());
