@@ -1,9 +1,9 @@
 <?php
-	
+
 // ________ TOOLS ________
 	session_start();
 
-	$db = new PDO("mysql:host=192.168.1.51;dbname=leshop", '','');
+	$db = new PDO("mysql:host=192.168.1.51;dbname=leshop", 'lechat','gochat');
 /*  				DB HOLLUX */
 /*  $db = new PDO("mysql:host=localhost;dbname=leshop", '', '');
 
