@@ -60,18 +60,18 @@ class ItemManager
 			$description = $db->quote($item->getDescription());
 			$idCategory = $item->getCategory()->getId();
 			$query = "INSERT INTO item (id_category, name, price, stock, image, description) VALUES('".$idCategory."','".$name."''".$price."''".$stock."''".$image."''".$description."')";
-			$res =  $db->exec($query);
-			if($res)
+			try
 			{
-				$id = $db->lastInsertId();
-				if($id)
-				{
-					return $this-findByID($id);
-				}
-				else
-				{
-					return "Internal server Error";
-				}
+				$res =  $db->exec($query);
+			}
+			catch(Exception $e)
+			{
+				return $e->getMessage();
+			}
+			$id = $db->lastInsertId();
+			if($id)
+			{
+				return $this-findByID($id);
 			}
 		}
 	}
