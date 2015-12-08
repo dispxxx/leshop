@@ -5,8 +5,6 @@ class User
 
 	// Properties
 	private $id;
-	private $id_address;
-	private $address;
 	private $email;
 	private $hash;
 	private $name;
@@ -31,18 +29,6 @@ class User
 	public function getId()
 	{
 		return $this -> id;
-	}
-
-
-	// Get user adress
-	public function getAdress()
-	{
-		if (!$this -> address)
-		{
-			$addressManager = new AddressManager($this -> db);
-			$this -> address = $addressManager -> readById($this -> id_address);
-		}
-		return $this -> address;
 	}
 
 
@@ -98,14 +84,6 @@ class User
 	// Setters
 
 
-	// Set user adress
-	public function setAdress(Adress $adress)
-	{
-		$this -> id_adress = $adress -> getId();
-		return true;
-	}
-
-
 	// Set user email
 	public function setEmail($email)
 	{
@@ -131,11 +109,11 @@ class User
 	// Set user hash
 	public function setHash($password, $password2)
 	{
-		if (strlen($password) > 7 && strlen($password) < 32)
+		if (strlen($password) > 5 && strlen($password) < 32)
 		{
 			if ($password == $password2)
 			{
-				$this ->password = password_hash($password, PASSWORD_DEFAULT);
+				$this -> hash = password_hash($password, PASSWORD_DEFAULT);
 				return true;
 			}
 			else
@@ -153,11 +131,11 @@ class User
 	// Set user name
 	public function setName($name)
 	{
-		if (strlen($login) > 1 && strlen($login) < 32)
+		if (strlen($name) > 1 && strlen($name) < 32)
 		{
-			if (preg_match("#[a-zA-Z0-9]+[ -_']*$#", $login))
+			if (preg_match("#[a-zA-Z0-9]+[ -_']*$#", $name))
 			{
-				$this ->login = $login;
+				$this ->name = $name;
 				return true;
 			}
 			else
@@ -175,11 +153,11 @@ class User
 	// Set user surname
 	public function setSurname($surname)
 	{
-		if (strlen($login) > 1 && strlen($login) < 32)
+		if (strlen($surname) > 1 && strlen($surname) < 32)
 		{
-			if (preg_match("#[a-zA-Z0-9]+[ -_']*$#", $login))
+			if (preg_match("#[a-zA-Z0-9]+[ -_']*$#", $surname))
 			{
-				$this ->login = $login;
+				$this ->surname = $surname;
 				return true;
 			}
 			else
@@ -222,7 +200,7 @@ class User
 	// Set last connection date
 	public function setDateConnection($date)
 	{
-		if (ctype_digit(strtotime($date)))
+		if (ctype_digit($date))
 		{
 			$this -> date_connection = $date;
 			return true;
@@ -232,4 +210,19 @@ class User
 			throw new Exception('Format needs to be a timestamp');
 		}
 	}
+
+
+	// Check user password
+	public function checkPassword($password)
+	{
+		if (password_verify($password, $this -> hash))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
 ?>

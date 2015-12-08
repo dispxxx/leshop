@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 07, 2015 at 02:49 PM
+-- Generation Time: Dec 08, 2015 at 11:23 AM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `adress` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
   `street` varchar(63) COLLATE utf8_bin NOT NULL,
   `city` varchar(63) COLLATE utf8_bin NOT NULL,
   `citycode` varchar(31) COLLATE utf8_bin NOT NULL,
@@ -106,7 +107,6 @@ CREATE TABLE IF NOT EXISTS `order` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_adress` int(11) NOT NULL,
   `email` varchar(31) COLLATE utf8_bin NOT NULL,
   `hash` varchar(255) COLLATE utf8_bin NOT NULL,
   `name` varchar(31) COLLATE utf8_bin NOT NULL,

@@ -18,13 +18,12 @@ class UserManager
 
 
 	// Create user
-	public function create(Adress $adress, $email, $name, $surname, $password, $password2)
+	public function create($email, $name, $surname, $password, $password2)
 	{
 		$user 		= new User($this -> db);
 
 		try
 		{
-			$user -> setAdress($adress);
 			$user -> setEmail($email);
 			$user -> setName($name);
 			$user -> setSurname($surname);
@@ -35,20 +34,19 @@ class UserManager
 			$err = $e -> getmessage();
 		}
 
-		if (!$err)
+		if (!isset($err))
 		{
-			$idAdress 	= $user -> getAdress() -> getId();
-			$email 		= $db -> quote($user -> getEmail());
-			$name 		= $db -> quote($user -> getName());
-			$surname 	= $db -> quote($user -> getSurname());
+			$email 		= $this -> db -> quote($user -> getEmail());
+			$name 		= $this -> db -> quote($user -> getName());
+			$surname 	= $this -> db -> quote($user -> getSurname());
 			$hash 		= $user -> getHash();
-			$query		= '	INSERT INTO user (id_adress, email, name, surname, hash)
-							VALUES ("'.$idAdress.'""'.$email.'","'.$name.'","'.$surname.'","'.$password.'")';
-			$res		= $db -> exec($query);
+			$query		= '	INSERT INTO user (email, name, surname, hash)
+							VALUES ('.$email.','.$name.','.$surname.','.$hash.')';
+			$res		= $this -> db -> exec($query);
 
 			if ($res)
 			{
-				$id = $db -> lastInsertId();
+				$id = $this -> db -> lastInsertId();
 
 				if ($id)
 				{
@@ -90,7 +88,7 @@ class UserManager
 						ORDER BY `date_registered` ASC';
 		}
 
-		$res 	= $db -> query($this -> db, $query);
+		$res 	= $this -> db -> query($this -> db, $query);
 
 		if ($res)
 		{
@@ -107,8 +105,8 @@ class UserManager
 	// Read user by id
 	public function readById($id)
 	{
-		$query 	= "SELECT * FROM user WHERE id = '".$id."'";
-		$res 	= $db -> query($query);
+		$query 	= 'SELECT * FROM user WHERE id = '.$id;
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -132,8 +130,8 @@ class UserManager
 	public function readByAdress(Adress $adress)
 	{
 		$id 	= $adress -> getId();
-		$query 	= 'SELECT * FROM user WHERE id_adress = "'.$id.'" ORDER BY id_adress DESC';
-		$res 	= $db -> query($query);
+		$query 	= 'SELECT * FROM user WHERE id_adress = '.$id.' ORDER BY id_adress DESC';
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -150,13 +148,13 @@ class UserManager
 	// Read user by email
 	public function readByEmail($email)
 	{
-		$email 	= $db -> quote($email);
-		$query 	= 'SELECT * FROM user WHERE email = "'.$email.'" ORDER BY email DESC';
-		$res 	= $db -> query($query);
+		$email 	= $this -> db -> quote($email);
+		$query 	= 'SELECT * FROM user WHERE email = '.$email.' ORDER BY email DESC';
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
-			$users = $res -> fetchAll(PDO::FETCH_CLASS, 'User', array($this -> db));
+			$users = $res -> fetchObject('User', array($this -> db));
 			return $users;
 		}
 		else
@@ -169,9 +167,9 @@ class UserManager
 	// Read user by name
 	public function readByName($name)
 	{
-		$name 	= $db -> quote($name);
-		$query 	= 'SELECT * FROM user WHERE name = "'.$name.'" ORDER BY name DESC';
-		$res 	= $db -> query($query);
+		$name 	= $this -> db -> quote($name);
+		$query 	= 'SELECT * FROM user WHERE name = '.$name.' ORDER BY name DESC';
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -188,9 +186,9 @@ class UserManager
 	// Read user by surname
 	public function readBySurname($surname)
 	{
-		$surname 	= $db -> quote($surname);
-		$query 		= 'SELECT * FROM user WHERE surname = "'.$surname.'" ORDER BY surname DESC';
-		$res 		= $db -> query($query);
+		$surname 	= $this -> db -> quote($surname);
+		$query 		= 'SELECT * FROM user WHERE surname = '.$surname.' ORDER BY surname DESC';
+		$res 		= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -208,8 +206,8 @@ class UserManager
 	public function readByStatus($status)
 	{
 		$status = intval($status);
-		$query 	= 'SELECT * FROM user WHERE status = "'.$status.'" ORDER BY email DESC';
-		$res 	= $db -> query($query);
+		$query 	= 'SELECT * FROM user WHERE status = '.$status.' ORDER BY email DESC';
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -232,7 +230,7 @@ class UserManager
 					FROM user
 					WHERE date_registration >= '.$min.' AND date_registration <= '.$max.'
 					ORDER BY date_registration ASC';
-		$res 	= $db -> query($query);
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -255,7 +253,7 @@ class UserManager
 					FROM user
 					WHERE date_connection >= '.$min.' AND date_connection <= '.$max.'
 					ORDER BY date_connection ASC';
-		$res 	= $db -> query($query);
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
@@ -273,22 +271,21 @@ class UserManager
 	public function update(User $user)
 	{
 		$id 				= intval($user -> getId());
-		$adressId			= intval($user -> getAdress() -> getId());
-		$email 				= $db -> quote($user -> getEmail());
-		$name 				= $db -> quote($user -> getName());
-		$surname 			= $db -> quote($user -> getSurname());
+		$email 				= $this -> db -> quote($user -> getEmail());
+		$name 				= $this -> db -> quote($user -> getName());
+		$surname 			= $this -> db -> quote($user -> getSurname());
 		$hash 				= $user -> getHash();
 		$status 			= intval($user -> getStatus());
 		$dateConnection 	= date('Y-m-d H:i:s', $user -> getDateConnection());
-		$query 				= "	UPDATE user
-								SET 	email 		= '".$email."',
-										login 		= '".$name."',
-										`password` 	= '".$hash."',
-										`status` 	= '".$status."',
-										avatar 		= '".$avatar."',
-										date_ban 	= '".$dateBan."'
-										WHERE id 	= '".$id."'";
-		$res 				= $db -> exec($query);
+		$query 				= '	UPDATE  user
+								SET 	email 			= '.$email.',
+										name 			= '.$name.',
+										surname 		= '.$surname.',
+										`hash` 			= "'.$hash.'",
+										`status` 		= '.$status.',
+										date_connection = "'.$dateConnection.'"
+										WHERE id 	= '.$id;
+		$res 				= $this -> db -> exec($query);
 
 		if ($res)
 		{
@@ -305,7 +302,7 @@ class UserManager
 	{
 		$id 	= intval($user -> getId());
 		$query 	= 'DELETE FROM user WHERE id = '.$id;
-		$res 	= $db -> exec($query);
+		$res 	= $this -> db -> exec($query);
 
 		if ($res)
 		{
@@ -316,4 +313,5 @@ class UserManager
 			throw new Exception('Database error');
 		}
 	}
+}
 ?>

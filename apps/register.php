@@ -1,5 +1,6 @@
 <?php
-$login = "";
+$name = "";
+$surname = "";
 $email = "";
 $password = "";
 $password2 = "";
