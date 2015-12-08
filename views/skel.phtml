@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>ForumFennec</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-	<!--	CSS-->
-		<link rel="stylesheet" type="text/css" href="./public/style/style.less"/>
-		<link rel="stylesheet" type="text/css" href="./public/style/style.css"/>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	</head>
-	<body>
-		<?php require('apps/nav.php'); ?>
-		<div class="container">
-		    <div class="contenu">
-			    <?php require('apps/content.php'); ?>
-		    </div>
-            <?php require('apps/footer.php'); ?>
-		</div>
-		
+<head>
+	<meta charset="UTF-8">
+	<title>Le Shop</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" href="public/css/bootstrap.min.css" media="screen">
+	<link rel="stylesheet" href="public/css/custom.min.css">
+	<link rel="stylesheet" href="public/css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<?php require('apps/nav.php'); ?>
+	<div class="wrap">
+		<?php require('controllers/content.php'); ?>
+	</div>
+	<?php require('controllers/footer.php'); ?>
 
-	<script type="text/javascript" src="./public/script/jquery-2.1.4.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="./public/script/script.js"></script>
+	<script type="text/javascript" src="public/js/jquery.js"></script>
+	<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="public/js/custom.js"></script>
+	<script type="text/javascript" src="public/js/script.js"></script>
 
-	</body>
+</body>
 </html>

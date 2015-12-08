@@ -132,7 +132,7 @@ class UserManager
 	public function readByAdress(Adress $adress)
 	{
 		$id 	= $adress -> getId();
-		$query 	= 'SELECT * FROM user WHERE id_adress = "'.$id.'"';
+		$query 	= 'SELECT * FROM user WHERE id_adress = "'.$id.'" ORDER BY id_adress DESC';
 		$res 	= $db -> query($query);
 
 		if ($res)
@@ -151,7 +151,7 @@ class UserManager
 	public function readByEmail($email)
 	{
 		$email 	= $db -> quote($email);
-		$query 	= 'SELECT * FROM user WHERE email = "'.$email.'"';
+		$query 	= 'SELECT * FROM user WHERE email = "'.$email.'" ORDER BY email DESC';
 		$res 	= $db -> query($query);
 
 		if ($res)
@@ -170,7 +170,7 @@ class UserManager
 	public function readByName($name)
 	{
 		$name 	= $db -> quote($name);
-		$query 	= 'SELECT * FROM user WHERE name = "'.$name.'"';
+		$query 	= 'SELECT * FROM user WHERE name = "'.$name.'" ORDER BY name DESC';
 		$res 	= $db -> query($query);
 
 		if ($res)
@@ -189,7 +189,7 @@ class UserManager
 	public function readBySurname($surname)
 	{
 		$surname 	= $db -> quote($surname);
-		$query 		= 'SELECT * FROM user WHERE surname = "'.$surname.'"';
+		$query 		= 'SELECT * FROM user WHERE surname = "'.$surname.'" ORDER BY surname DESC';
 		$res 		= $db -> query($query);
 
 		if ($res)
@@ -208,7 +208,7 @@ class UserManager
 	public function readByStatus($status)
 	{
 		$status = intval($status);
-		$query 	= 'SELECT * FROM user WHERE status = "'.$status.'"';
+		$query 	= 'SELECT * FROM user WHERE status = "'.$status.'" ORDER BY email DESC';
 		$res 	= $db -> query($query);
 
 		if ($res)
@@ -231,7 +231,7 @@ class UserManager
 		$query 	= '	SELECT *
 					FROM user
 					WHERE date_registration >= '.$min.' AND date_registration <= '.$max.'
-					ORDER BY login DESC';
+					ORDER BY date_registration ASC';
 		$res 	= $db -> query($query);
 
 		if ($res)
@@ -254,7 +254,7 @@ class UserManager
 		$query 	= '	SELECT *
 					FROM user
 					WHERE date_connection >= '.$min.' AND date_connection <= '.$max.'
-					ORDER BY login DESC';
+					ORDER BY date_connection ASC';
 		$res 	= $db -> query($query);
 
 		if ($res)
