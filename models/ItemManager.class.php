@@ -96,14 +96,14 @@ class ItemManager
 		if($res)
 		{
 			$id = $db->lastInsertId();
-				if($id)
-				{
-					return $this-findByID($id);
-				}
-				else
-				{
-					return "Internal server Error";
-				}
+			if($id)
+			{
+				return $this-findByID($id);
+			}
+			else
+			{
+				return "Internal server Error";
+			}
 		}
 	}
 
@@ -123,7 +123,7 @@ class ItemManager
 			{
 				$idCategory = $category->getId();
 				$query = "SELECT * FROM item WHERE id_category='".$idCategory."' ORDER BY '".$filter."' '".$order."'";
-				$res = $db->exec($query);
+				$res = $this->db->query($query);
 				$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
 				return $listItem;
 			}
@@ -133,13 +133,34 @@ class ItemManager
 	{
 		if($order == "ASC" || $order == "DESC")
 			{
-			$query = "SELECT * FROM item ORDER BY name '".$order."'"
-			$res = $db->exec($query);
+			$query = "SELECT * FROM item ORDER BY name '".$order."'";
+			$res = $this->db->query($query);
 			$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
 			return $listItem;
 			}
 	}
-	public function read
+	public function readByName($name)
+	{
+		$name = $db->quote($item->getName());
+		$query = "SELECT * FROM item WHERE name='".$name."'";
+		$res = $this->db->query($query);
+		if($res)
+		{
+			$item = $res->fetchObject("Item", array($this->db));
+			if ($item)
+			{
+				return $item;
+			}
+			else
+			{
+				return "Item not found";
+			}
+		}
+		else
+		{
+			return "Internal Server Error";
+		}
+	}
 }
 
 
