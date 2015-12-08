@@ -67,7 +67,7 @@ if (isset($_GET['page']))
 
 		if (isset($handlers_public[$_GET['page']]) && !empty($_POST))
 		{
-			require('controllers/handler/handler_'.$handlers_public[$_GET['page']].'.php');
+			require('apps/handler/handler_'.$handlers_public[$_GET['page']].'.php');
 		}
 	}
 
@@ -93,7 +93,7 @@ if (isset($_GET['page']))
 		}
 		if (isset($handlers_user[$_GET['page']]) && !empty($_POST))
 		{
-			require('controllers/handler/handler_'.$handlers_user[$_GET['page']].'.php');
+			require('apps/handler/handler_'.$handlers_user[$_GET['page']].'.php');
 		}
 	}
 
@@ -104,7 +104,7 @@ if (isset($_GET['page']))
 
 		if (isset($handlers_admin[$_GET['page']]) && !empty($_POST))
 		{
-			require('controllers/handler/handler_'.$handlers_admin[$_GET['page']].'.php');
+			require('apps/handler/handler_'.$handlers_admin[$_GET['page']].'.php');
 		}
 	}
 
@@ -122,7 +122,7 @@ else
 }
 
 
-require('controllers/skel.php');
+require('apps/skel.php');
 
 /* TURN OFF SESSION SUCCESS*/
 $_SESSION['success'] = "";
