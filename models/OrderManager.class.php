@@ -28,5 +28,6 @@ class OrderManager
 			return $this-findByID($id);
 		}
 	}
+	public function 
 }
 ?>
