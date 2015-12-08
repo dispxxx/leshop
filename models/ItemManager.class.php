@@ -139,7 +139,7 @@ class ItemManager
 			return $listItem;
 			}
 	}
-	public function get
+	public function read
 }
 
 
