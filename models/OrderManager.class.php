@@ -28,6 +28,28 @@ class OrderManager
 			return $this-findByID($id);
 		}
 	}
-	public function 
+	public function editPrice(Order $order)
+	{
+		$id = $order->getId();
+		$query = "SELECT price FROM link_order_item";
+		$res = $this->db->exec($query);
+		$listPrice = $res->fetchAll(PDO::FETCH_CLASS, "Link_order_item", array($this->db));
+		return $listPrice;
+		/* utiliser le tableau $listPrice, additionner tous les résultats et obtenir $price*/
+		$query = "UPDATE order SET price='".$price."' WHERE id='".$id."' ";
+		$res = $db->exec($query);
+		if($res)
+		{
+			$id = $db->lastInsertId();
+			if($id)
+			{
+				return $this-findByID($id);
+			}
+			else
+			{
+				return "Internal server Error";
+			}
+		}
+	}
 }
 ?>
