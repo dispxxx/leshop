@@ -8,69 +8,42 @@ class CategoryManager
 		$this->db = $db;
 	}
 
-	public function create(User $id, $name, $description)
+	public function create($name, $description)
 	{
-		$Category = new Category();
-		$valid = $category->setId($id);
-		// var_dump($valide);
-		if($valid === true)
+		$category 	= new Category($this -> db);
+		try
 		{
-			$valid = $categoty->setName($name);
-			
-			if ($valid === true)
-			{
-				$valid = $category->setDescription($description);
-				
-				if($valide === true)
+			$category -> setName($name);
+			$category -> setDescription($description);
+		}
+		catch (Exception $e)
+		{
+			$err[] = $e->getMessage();
+		}
+		
+		if(!$err)
+		{
+			$name = $this->db->quote($category->getName());
+			$description = $this->db->quote($category->getDescription());
+			$query = "INSERT INTO category (name, description) VALUES ('".$name."', '".$description."')";
+			$res = $this->db->exec($query)
+			if($res)
 				{
-					
-					$name = mysqli_real_escape_string($this->db, $category->getName());
-					$description = mysqli_real_escape_string($this->db, $category->getDescription());
-						
-					$id = $category->getId();
-					$query = "INSERT INTO category (id, name, description) VALUES ('".$name."', '".$id."','".$description."', '".$image."')";
-					
-					$result = mysqli_query($this->db, $query);
-					if($result)
-					{
-						$id = mysqli_insert_id($this->db);
-						if($id)
-						{
-							return $this->readById($id);
-						}
-							else
-							{
-								return "error";
-							}
-					}
-					else
-					{
-						return mysqli_error($this->db);	
-					}
+					return $this->findById($id);
 				}
 				else
 				{
-					return $valide;
+					return "error";
 				}
-			}
-			else
-			{
-				return $valide;
-			}
-		}
-		else
-		{
-			return $valide;
 		}
 	}
 
-
 	public function delete(Category $category)
 	{
-		$id = $category->getId();
+		$id = $this->db->quote($category->getId());
 		$query = "DELETE FROM category WHERE id='".$id."'";
-		$result = mysqli_query($this->db, $query);
-		if($result)
+		$res = $this->db->exec($query);
+		if($res)
 		{
 			return true;
 		}
@@ -80,18 +53,14 @@ class CategoryManager
 		}
 	}
 	
-	public function update(Rubrique $rubrique)
+	public function update(Category $category)
 	{
-
-		$id = intval();
-		$name = mysqli_real_escape_string($this->db, $category->getName());
-		$description = mysqli_real_escape_string($this->db, $category->getDescription()); 
-		
-		$id = $category->getId();
+		$id = $this->db->intval($category->getId());
+		$name = $this->db->quote($category->getName());
+		$description = $this->db->quote($category->getDescription());
 
 		$query = "UPDATE category SET name='".$name."', description='".$description."', WHERE id='".$id."'";
-		$result = mysqli_query($this->db, $query);
-
+		$res = $this->db->exec($query);
 		if ($result)
 		{
 			return $this->readById($id);
@@ -107,19 +76,19 @@ class CategoryManager
 	}
 	public function readById($id)
 	{
-		$id = intval($id);
+		$id = $this->db->intval($id);
 		$query = "SELECT * FROM category WHERE id='".$id."'";
-		$result = mysqli_query($this->db, $query);
-		if($result)
+		$res = $this->db->exec($query);
+		if($res)
 		{
-			$category = mysqli_fetch_object($result, "Category");
+			$category = $res->fetchObject("Category", array($this->db));
 			if($rubrique)
 			{
-				return $rubrique;
+				return $category;
 			}
 			else
 			{
-				return "Rubrique not found";
+				return "Category not found";
 			}
 		}
 		else 

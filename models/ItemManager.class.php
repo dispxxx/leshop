@@ -58,20 +58,20 @@ class ItemManager
 			$stock = $db->quote($item->getStock());
 			$image = $db->quote($item->getImage());
 			$description = $db->quote($item->getDescription());
-			$idCategory = $item->getCategory->getId();
+			$idCategory = $item->getCategory()->getId();
 			$query = "INSERT INTO item (id_category, name, price, stock, image, description) VALUES('".$idCategory."','".$name."''".$price."''".$stock."''".$image."''".$description."')";
-			$res =  $db->exec($query);
-			if($res)
+			try
 			{
-				$id = $db->lastInsertId();
-				if($id)
-				{
-					return $this-findByID($id);
-				}
-				else
-				{
-					return "Internal server Error";
-				}
+				$res =  $db->exec($query);
+			}
+			catch(Exception $e)
+			{
+				return $e->getMessage();
+			}
+			$id = $db->lastInsertId();
+			if($id)
+			{
+				return $this-findByID($id);
 			}
 		}
 	}
@@ -82,9 +82,29 @@ class ItemManager
 		$res = $db->exec($query);
 		return "internal Server Error";
 	}
-	public function getEdit($id, $name, $price, $stock, $image, $description)
+	public function edit(Item $item)
 	{
-		$id = 
+		$idCategory = $item->getCategory()->getId();
+		$id = intval($id);
+		$name = $db->quote($item->getName());
+		$price = $db->quote($item->getPrice());
+		$stock = $db->quote($item->getStock());
+		$image = $db->quote($item->getImage());
+		$description = $db->quote($item->getDescription());
+		$query = "UPDATE item SET name='".$name."', price='".$price."', stock='".$stock."',image='".$image."', description='".$description."', id_category='".$idCategory."' WHERE id='".$id."' ";
+		$res = $db->exec($query);
+		if($res)
+		{
+			$id = $db->lastInsertId();
+			if($id)
+			{
+				return $this-findByID($id);
+			}
+			else
+			{
+				return "Internal server Error";
+			}
+		}
 	}
 
 	public function getLast()
@@ -103,7 +123,7 @@ class ItemManager
 			{
 				$idCategory = $category->getId();
 				$query = "SELECT * FROM item WHERE id_category='".$idCategory."' ORDER BY '".$filter."' '".$order."'";
-				$res = $db->exec($query);
+				$res = $this->db->query($query);
 				$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
 				return $listItem;
 			}
@@ -113,13 +133,34 @@ class ItemManager
 	{
 		if($order == "ASC" || $order == "DESC")
 			{
-			$query = "SELECT * FROM item ORDER BY name '".$order."'"
-			$res = $db->exec($query);
+			$query = "SELECT * FROM item ORDER BY name '".$order."'";
+			$res = $this->db->query($query);
 			$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
 			return $listItem;
 			}
 	}
-	public function get
+	public function readByName($name)
+	{
+		$name = $db->quote($item->getName());
+		$query = "SELECT * FROM item WHERE name='".$name."'";
+		$res = $this->db->query($query);
+		if($res)
+		{
+			$item = $res->fetchObject("Item", array($this->db));
+			if ($item)
+			{
+				return $item;
+			}
+			else
+			{
+				return "Item not found";
+			}
+		}
+		else
+		{
+			return "Internal Server Error";
+		}
+	}
 }
 
 
