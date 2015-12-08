@@ -58,7 +58,7 @@ class ItemManager
 			$stock = $db->quote($item->getStock());
 			$image = $db->quote($item->getImage());
 			$description = $db->quote($item->getDescription());
-			$idCategory = $item->getCategory->getId();
+			$idCategory = $item->getCategory()->getId();
 			$query = "INSERT INTO item (id_category, name, price, stock, image, description) VALUES('".$idCategory."','".$name."''".$price."''".$stock."''".$image."''".$description."')";
 			$res =  $db->exec($query);
 			if($res)
@@ -82,9 +82,29 @@ class ItemManager
 		$res = $db->exec($query);
 		return "internal Server Error";
 	}
-	public function getEdit($id, $name, $price, $stock, $image, $description)
+	public function edit(Item $item)
 	{
-		$id = 
+		$idCategory = $item->getCategory()->getId();
+		$id = intval($id);
+		$name = $db->quote($item->getName());
+		$price = $db->quote($item->getPrice());
+		$stock = $db->quote($item->getStock());
+		$image = $db->quote($item->getImage());
+		$description = $db->quote($item->getDescription());
+		$query = "UPDATE item SET name='".$name."', price='".$price."', stock='".$stock."',image='".$image."', description='".$description."', id_category='".$idCategory."' WHERE id='".$id."' ";
+		$res = $db->exec($query);
+		if($res)
+		{
+			$id = $db->lastInsertId();
+				if($id)
+				{
+					return $this-findByID($id);
+				}
+				else
+				{
+					return "Internal server Error";
+				}
+		}
 	}
 
 	public function getLast()
