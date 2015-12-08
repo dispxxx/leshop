@@ -82,6 +82,10 @@ class ItemManager
 		$res = $db->exec($query);
 		return "internal Server Error";
 	}
+	public function getEdit($id, $name, $price, $stock, $image, $description)
+	{
+		$id = 
+	}
 
 	public function getLast()
 	{
