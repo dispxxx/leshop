@@ -9,48 +9,113 @@ class ItemManager
 	}
 	public function create(Category $category, $name, $price, $stock, $image, $description)
 	{
+		$errors = array();
 		$item = new Item($this->db);
-		$valide = $item->setName($name);
-		if($valide === true)
+		try
 		{
-			$valide = $item->setPrice($price);
-			if($valide === true)
+			$item->setName($name);
+		}
+		catch (Exception $e)
+		{
+			$errors[] = $e->getMessage();
+		}
+		try
+		{
+			$item->setDescription($description);
+		}
+		catch (Exception $e)
+		{
+			$errors[] = $e->getMessage();
+		}
+		try
+		{
+			$item->setImage($image);
+		}
+		catch (Exception $e)
+		{
+			$errors[] = $e->getMessage();
+		}
+		try
+		{
+			$item->setStock($stock);
+		}
+		catch (Exception $e)
+		{
+			$errors[] = $e->getMessage();
+		}
+		try
+		{
+			$item->setPrice($price);
+		}
+		catch (Exception $e)
+		{
+			$errors[] = $e->getMessage();
+		}
+		if(count($errors) == 0)
+		{
+			$name = $db->quote($item->getName());
+			$price = $db->quote($item->getPrice());
+			$stock = $db->quote($item->getStock());
+			$image = $db->quote($item->getImage());
+			$description = $db->quote($item->getDescription());
+			$idCategory = $item->getCategory->getId();
+			$query = "INSERT INTO item (id_category, name, price, stock, image, description) VALUES('".$idCategory."','".$name."''".$price."''".$stock."''".$image."''".$description."')";
+			$res =  $db->exec($query);
+			if($res)
 			{
-				$valide = $item->setStock($stock);
-				if($valide === true)
+				$id = $db->lastInsertId();
+				if($id)
 				{
-					$valide = $item->setImage($image);
-					if($valide === true)
-					{
-						$valide = $item->setDescription($description);
-						if($valide === true)
-						{
-							$name = $db->quote($item->getName());
-							$price = $db->quote($item->getPrice());
-							$stock = $db->quote($item->getStock());
-							$image = $db->quote($item->getImage());
-							$description = $db->quote($item->getDescription());
-							$idCategory = $item->getCategory->getId();
-							$query = "INSERT INTO item (id_category, name, price, stock, image, description) VALUES('".$idCategory."','".$name."''".$price."''".$stock."''".$image."''".$description."')";
-							$res =  $db->exec($query);
-							if($res)
-							{
-								$id = $db->lastInsertId();
-								if($id)
-								{
-									return $this-findByID($id);
-								}
-								else
-								{
-									return "Internal server Error";
-								}
-							}
-						}
-					}
+					return $this-findByID($id);
+				}
+				else
+				{
+					return "Internal server Error";
 				}
 			}
 		}
 	}
+	public function getDelete(Item $item)
+	{
+		$id = $item->getId();
+		$query = "DELETE FROM item WHERE id='".$id."'";
+		$res = $db->exec($query);
+		return "internal Server Error";
+	}
+
+	public function getLast()
+	{
+		$query = "SELECT * FROM item ORDER BY date DESC LIMIT 20";
+		$res = $db->exec($query);
+		$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
+		return $listItem;
+	}
+
+	public function getByCategory(Category $category, $filter="name", $order="ASC")
+	{
+		if($filter == "name" || $filter == "price" || )
+		{
+			if($order == "ASC" || $order == "DESC")
+			{
+				$idCategory = $category->getId();
+				$query = "SELECT * FROM item WHERE id_category='".$idCategory."' ORDER BY '".$filter."' '".$order."'";
+				$res = $db->exec($query);
+				$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
+				return $listItem;
+			}
+		}
+	}
+	public function getByName($order="ASC")
+	{
+		if($order == "ASC" || $order == "DESC")
+			{
+			$query = "SELECT * FROM item ORDER BY name '".$order."'"
+			$res = $db->exec($query);
+			$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
+			return $listItem;
+			}
+	}
+	public function get
 }
 
 
