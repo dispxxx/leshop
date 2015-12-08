@@ -70,25 +70,25 @@ class CategoryManager
 			return "Error";
 		}
 	}
-	public function find($id)
+	public function read($id)
 	{
 		return $this->readById($id); 
 	}
-	public function findById($id)
+	public function readById($id)
 	{
-		$id = intval($id);
+		$id = $this->db->intval($id);
 		$query = "SELECT * FROM category WHERE id='".$id."'";
-		$result = mysqli_query($this->db, $query);
-		if($result)
+		$res = $this->db->exec($query);
+		if($res)
 		{
-			$category = mysqli_fetch_object($result, "Category");
+			$category = $res->fetchObject("Category", array($this->db));
 			if($rubrique)
 			{
-				return $rubrique;
+				return $category;
 			}
 			else
 			{
-				return "Rubrique not found";
+				return "Category not found";
 			}
 		}
 		else 
@@ -96,7 +96,7 @@ class CategoryManager
 			return "Error";
 		}
 	}
-	public function findByDescription($description)
+	public function readByDescription($description)
 	{
 		return $this->readByDescription($description);
 	}
