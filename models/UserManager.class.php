@@ -78,21 +78,21 @@ class UserManager
 		{
 			$query = '	SELECT *
 						FROM user
-						ORDER BY `date_registered` ASC
+						ORDER BY `date_registration` ASC
 						LIMIT '.$n;
 		}
 		else
 		{
 			$query = '	SELECT *
 						FROM user
-						ORDER BY `date_registered` ASC';
+						ORDER BY `date_registration` ASC';
 		}
 
-		$res 	= $this -> db -> query($this -> db, $query);
+		$res 	= $this -> db -> query($query);
 
 		if ($res)
 		{
-			$users = $res -> fetchAll(PDO::FETCH_CLASS, 'Section', array($this -> db));
+			$users = $res -> fetchAll(PDO::FETCH_CLASS, 'User', array($this -> db));
 			return $users;
 		}
 		else
@@ -140,7 +140,7 @@ class UserManager
 		}
 		else
 		{
-			throw new Exception('No user found');
+			throw new Exception('Database error');
 		}
 	}
 

@@ -1,15 +1,12 @@
-<li class="liNav2 col-sm-1">
-    <button class="buttonPrincipal">
-       <a href="?page=profil&id=<?=$_SESSION['id']?>" class="aNav"><?php echo $currentUser->getLogin(); ?></a> 
-    </button>
-</li>
-<li class="liNav2 col-sm-1">
-    <button class="buttonPrincipal">
-       <a href="?page=mp" class="aNav">Mp</a> 
-    </button>
-</li>
-<li class="liNav2 col-sm-1">
-    <button class="buttonPrincipal">
-       <a href="?page=logout&action=logout" class="aNav">Logout</a> 
-    </button>
-</li>
+<ul class="nav navbar-nav">
+	<li><a href="?page=profil&id=<?=$_SESSION['id']?>">My profile</a></li>
+	<li><a href="?page=basket">My basket</a></li>
+	<li><a href="?page=categories">Categories</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+	<?php if ($currentUser -> getStatus() > 0)
+	{ ?>
+		<li><a href="?page=dashboard">Dashboard</a></li>
+	<?php } ?>
+	<li><a href="?page=logout">Logout</a></li>
+</ul>

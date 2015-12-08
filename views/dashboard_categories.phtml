@@ -1,0 +1,34 @@
+<div class="page-title col-xs-12">
+	<h1>Categories</h1>
+</div>
+<div class="form-wrapper col-xs-12">
+	<a href="#collapseNew" role="button" data-toggle="collapse" aria-controls="collapseNew" class="btn btn-md btn-default">New category <span class="caret"></span></a>
+
+	<div class="collapse" id="collapseNew">
+		<form action="?page=dashboard_categories" method="POST">
+			<div class="row">
+				<div class="form-title col-xs-12">
+					<h3>Create new category</h3>
+				</div>
+				<div class="form-group col-xs-12 col-sm-4">
+					<label for="new_name" class="control-label">Name:</label>
+					<input type="text" class="form-control" name="new_name" id="new_name"
+						   value="<?=  (isset($new_name)) ? htmlentities($new_name) : "" ;?>">
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="new_description" class="control-label">Description:</label>
+					<textarea name="new_description" id="new_description" class="form-control" cols="30"
+						rows="2"><?=  (isset($new_description)) ? htmlentities($new_description) : ""; ?></textarea>
+				</div>
+				<div class="form-group col-xs-12 text-right">
+					<button class="btn btn-primary" type="submit">Send</button>
+				</div>
+			</div> <!-- row -->
+		</form>
+	</div> <!-- collapse -->
+</div> <!-- form-wrapper -->
+<div class="page-body col-xs-12">
+	<ul>
+		<?php require('apps/dashboard_category.php') ?>
+	</ul>
+</div>

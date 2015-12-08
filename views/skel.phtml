@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" href="public/css/bootstrap.min.css" media="screen">
-	<link rel="stylesheet" href="public/css/custom.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
 	<link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -15,15 +14,14 @@
 	<![endif]-->
 </head>
 <body>
-	<?php //require('apps/nav.php'); ?>
-	<div class="wrap">
+	<?php require('apps/nav.php'); ?>
+	<main class="main-wrapper">
 		<?php require('apps/content.php'); ?>
-	</div>
+	</main>
 	<?php //require('apps/footer.php'); ?>
 
-	<script type="text/javascript" src="public/js/jquery.js"></script>
+	<script type="text/javascript" src="public/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="public/js/custom.js"></script>
 	<script type="text/javascript" src="public/js/script.js"></script>
 
 </body>

@@ -1,3 +1,3 @@
 <?php
-    require('views/nav.phtml');
+	require('views/nav.phtml');
 ?>

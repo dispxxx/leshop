@@ -34,7 +34,8 @@ if (isset($_SESSION['id']))
 $access_public 	= array('login', 'register', 'home', 'category');
 $access_user 	= array('logout', 'home', 'category', 'profil');
 $access_admin	= array('dashboard', 'dashboard_users', 'dashboard_category',
-						'dashboard_items', 'dashboard_orders', 'dashboard_users');
+						'dashboard_items', 'dashboard_orders', 'dashboard_users',
+						'dashboard_categories');
 
 // Handlers
 $handlers_public 	= array('login' 	=> 'user',
@@ -44,7 +45,7 @@ $handlers_admin		= array('dashboard_users' 		=> 'user',
 							'dashboard_items' 		=> 'item',
 							'dashboard_order' 		=> 'order',
 							'dashboard_category' 	=> 'category');
-
+$access_ids 		= array();
 
 if (isset($_GET['page']))
 {
