@@ -91,23 +91,27 @@ class Order
 	}
 	public function setDateUpdate($dateUpdate)
 	{
-			$this->dateUpdate = $dateUpdate;
-			return true;
+		$this->dateUpdate = $dateUpdate;
+		return true;
 	}
 	public function setDatePay($datePay)
 	{
-			$this->datePay = $datePay;
-			return true;
+		$this->datePay = $datePay;
+		return true;
 	}
 	public function setDateSend($dateSend)
 	{
-			$this->dateSend = $dateSend;
-			return true;
+		$this->dateSend = $dateSend;
+		return true;
 	}
 	public function setDateReception($dateReception)
 	{
-			$this->dateReception = $dateReception;
-			return true;
+		$this->dateReception = $dateReception;
+		return true;
+	}
+	public function addLinkOrderItem(Item $item, Order $order)
+	{
+		$idItem = $order->getItem->getId()->
 	}
 }
 
