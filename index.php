@@ -44,7 +44,7 @@ $handlers_user 		= array();
 $handlers_admin		= array('dashboard_users' 		=> 'user',
 							'dashboard_items' 		=> 'item',
 							'dashboard_order' 		=> 'order',
-							'dashboard_category' 	=> 'category');
+							'dashboard_categories' 	=> 'category');
 $access_ids 		= array();
 
 if (isset($_GET['page']))

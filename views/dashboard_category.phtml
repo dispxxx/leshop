@@ -1,1 +1,5 @@
-<li><strong><?php echo $category -> getName() ?></strong></li>
+<li class="list-group-item">
+	<a href="?page=category$id=<?php echo $category -> getId() ?>">
+		<strong><?php echo $category -> getName() ?></strong>
+	</a>
+</li>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ItemManager
 {
 	private $db;
@@ -141,6 +141,4 @@ class ItemManager
 	}
 	public function read
 }
-
-
- ?>
+?>

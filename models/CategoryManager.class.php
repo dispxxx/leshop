@@ -97,9 +97,9 @@ class CategoryManager
 	// Read category by id
 	public function readById($id)
 	{
-		$id = $this -> db -> intval($id);
-		$query = "SELECT * FROM category WHERE id='".$id."'";
-		$res = $this -> db -> exec($query);
+		$id 	= intval($id);
+		$query 	= "SELECT * FROM category WHERE id='".$id."'";
+		$res 	= $this -> db -> exec($query);
 		if($res)
 		{
 			$category = $res -> fetchObject("Category", array($this -> db));

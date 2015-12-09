@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Item
 {
 	private $db;
@@ -68,12 +68,12 @@ class Item
 	{
 		if (ctype_digit($price))
 		{
-			$this->price = $price;	
+			$this->price = $price;
 			return true;
 		}
 		else
 		{
-			throw new Exception("vous devez rentrer un nombre");		
+			throw new Exception("vous devez rentrer un nombre");
 		}
 	}
 	public function setStock($stock)
@@ -85,12 +85,12 @@ class Item
 		}
 		else
 		{
-			throw new Exception("vous devez rentrer un nombre");		
+			throw new Exception("vous devez rentrer un nombre");
 		}
 	}
 	public function setImage($image)
 	{
-		
+
 	}
 	public function setDescription($description)
 	{
@@ -106,6 +106,4 @@ class Item
 	}
 
 }
-
-
- ?>
+?>

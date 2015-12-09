@@ -40,7 +40,7 @@ class Category
 	{
 		if (strlen($name) > 1 && strlen($name) < 32)
 		{
-			$this -> name = $name();
+			$this -> name = $name;
 			return true;
 		}
 		else
