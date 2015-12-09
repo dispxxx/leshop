@@ -109,9 +109,26 @@ class Order
 		$this->dateReception = $dateReception;
 		return true;
 	}
-	public function addLinkOrderItem(Item $item, Order $order)
+	public function addLinkOrderItem(Item $item, Order $order, $quantity, $price)
 	{
-		$idItem = $order->getItem->getId()->
+		$idItem = $item->getId();
+		$idOrder = $order->getId();
+		$quantity = intval($quantity);
+		$price = ($item->getPrice())*$quantity;
+		$query = "INSERT INTO link_order_item (id_order, id_item, quantity, price) VALUES('".$idItem."','".$idOrder."', '".$quantity."', '".$price."')";
+		$res =  $db->exec($query);
+		if($res)
+		{
+			$id = $db->lastInsertId();
+			if($id)
+			{
+				return $this-findByID($id);
+			}
+			else
+			{
+				return "Internal server Error";
+			}
+		}
 	}
 }
 
