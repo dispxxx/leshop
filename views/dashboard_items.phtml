@@ -2,7 +2,10 @@
 	<h1>Items</h1>
 </div>
 <div class="form-wrapper col-xs-12">
-	<a href="#collapseNew" role="button" data-toggle="collapse" aria-controls="collapseNew" class="btn btn-md btn-default">New category <span class="caret"></span></a>
+	<a href="#collapseNew" role="button" data-toggle="collapse"
+		aria-controls="collapseNew" class="btn btn-md btn-default">
+		New item <span class="caret"></span>
+	</a>
 
 	<div class="collapse" id="collapseNew">
 		<form action="?page=dashboard_items" method="POST">
@@ -10,20 +13,47 @@
 				<div class="form-title col-xs-12">
 					<h3>Create new item</h3>
 				</div>
+			</div>
+			<div class="row">
 				<div class="form-group col-xs-12 col-sm-4">
 					<label for="new_name" class="control-label">Name:</label>
 					<input type="text" class="form-control" name="new_name" id="new_name"
 						   value="<?=  (isset($new_name)) ? htmlentities($new_name) : "" ;?>">
 				</div>
-				<div class="form-group col-xs-12 col-sm-8">
+				<div class="form-group col-xs-12 col-sm-4">
 					<label for="new_category" class="control-label">Category:</label>
 					<input type="text" class="form-control" name="new_category" id="new_category"
 						   value="<?=  (isset($new_category)) ? htmlentities($new_category) : "" ;?>">
 				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-xs-12 col-sm-4">
+					<label for="new_price" class="control-label">Price:</label>
+					<div class="input-group">
+						<input type="number" class="form-control" name="new_price" id="new_price"
+							   value="<?=  (isset($new_price)) ? htmlentities($new_price) : "" ;?>" min="0">
+						<span class="input-group-addon">€</span>
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-sm-4">
+					<label for="new_stock" class="control-label">Stock:</label>
+					<input type="number" class="form-control" name="new_stock" id="new_stock"
+						   value="<?=  (isset($new_stock)) ? htmlentities($new_stock) : "" ;?>" min="0">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-xs-12 col-sm-8">
+					<label for="new_image" class="control-label">Image:</label>
+					<input type="text" name="new_image" id="new_image" class="form-control">
+						<?=  (isset($new_image)) ? htmlentities($new_image) : ""; ?>
+					</input>
+				</div>
 				<div class="form-group col-xs-12">
 					<label for="new_description" class="control-label">Description:</label>
 					<textarea name="new_description" id="new_description" class="form-control" cols="30"
-						rows="2"><?=  (isset($new_description)) ? htmlentities($new_description) : ""; ?></textarea>
+						rows="2">
+						<?=  (isset($new_description)) ? htmlentities($new_description) : ""; ?>
+					</textarea>
 				</div>
 				<div class="form-group col-xs-12 text-right">
 					<button class="btn btn-primary" type="submit">Send</button>

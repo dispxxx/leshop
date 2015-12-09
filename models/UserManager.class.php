@@ -80,7 +80,7 @@ class UserManager
 		{
 			$query = '	SELECT *
 						FROM user
-						ORDER BY '.$filter.' '.$order'
+						ORDER BY '.$filter.' '.$order.'
 						LIMIT '.$n;
 		}
 		else

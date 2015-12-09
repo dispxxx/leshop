@@ -33,8 +33,12 @@ if (isset($_SESSION['id']))
 // Pages
 $access_public 	= array('login', 'register', 'home', 'category');
 $access_user 	= array('logout', 'home', 'category', 'profil');
-$access_admin	= array('dashboard', 'dashboard_users', 'dashboard_category',
-						'dashboard_items', 'dashboard_orders', 'dashboard_users',
+$access_admin	= array('dashboard',
+						'dashboard_users',
+						'dashboard_category',
+						'dashboard_items',
+						'dashboard_orders',
+						'dashboard_users',
 						'dashboard_categories');
 
 // Handlers
