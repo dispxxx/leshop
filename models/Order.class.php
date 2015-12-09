@@ -53,10 +53,24 @@ class Order
 	{
 		return $this->dateReception;
 	}
-	public function getListItem()
+	public function getItemList()
 	{
-		$query = "SELECT * FROM link_order_item WHERE $id_order= '".$id."'"
-		return $this->listItem;
+		if(!$this->item_list)
+		{
+			$this->item_list = array();
+			$query = "SELECT item.*,quantity FROM link_order_item LEFT JOIN item ON item.id=link_order_item.id_item  WHERE $id_order= '".$this->id."'";
+			$res = $this->db->query($query);
+			$list = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
+			$i = 0;
+			$max = count($list);
+			while ($i < $max)
+			{
+				$this->item_list[] = array ('item'=>$list[$i], 'quantity'=$list[$i]->quantity);
+				$i++;
+			}
+			return $this->itemList;
+			
+		}
 	}
 
 					/*	SETER*/
@@ -115,13 +129,15 @@ class Order
 		$this->dateReception = $dateReception;
 		return true;
 	}
-	public function addItem(Item $item, $quantity, $price)
+	public function addItem(Item $item, $quantity)
 	{
+		/*var_dump($this);*/
+		// $this->item_list 3
 		$idItem = $item->getId();
 		$idOrder = $this->getId();
 		$quantity = intval($quantity);
 		$price = ($item->getPrice())*$quantity;
-		/*$this->item_list[] = array('quantity'=>$quantity,'price'=>$price,'item'=>$item);*/
+		$this->item_list[] = array('quantity'=>$quantity,'price'=>$price,'item'=>$item);
 		$query = "INSERT INTO link_order_item (id_order, id_item, quantity, price) VALUES('".$idItem."','".$idOrder."', '".$quantity."', '".$price."')";
 		$res =  $this->db->exec($query);
 		if($res)
@@ -136,6 +152,8 @@ class Order
 				return "Internal server Error";
 			}
 		}
+		/*var_dump($this);*/
+		// $this->item_list 4
 	}
 }
 
