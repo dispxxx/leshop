@@ -1,164 +1,224 @@
 <?php
 class ItemManager
 {
+
+	// Properties
 	private $db;
 
+
+	// Constructor
 	public function __construct($db)
 	{
-		$this->db = $db;
+		$this -> db = $db;
 	}
+
+
+	// Create new item
 	public function create(Category $category, $name, $price, $stock, $image, $description)
 	{
 		$errors = array();
-		$item = new Item($this->db);
+		$item = new Item($this -> db);
+
 		try
 		{
-			$item->setName($name);
+			$item -> setName($name);
 		}
 		catch (Exception $e)
 		{
-			$errors[] = $e->getMessage();
+			$errors[] = $e -> getMessage();
 		}
 		try
 		{
-			$item->setDescription($description);
+			$item -> setDescription($description);
 		}
 		catch (Exception $e)
 		{
-			$errors[] = $e->getMessage();
+			$errors[] = $e -> getMessage();
 		}
 		try
 		{
-			$item->setImage($image);
+			$item -> setImage($image);
 		}
 		catch (Exception $e)
 		{
-			$errors[] = $e->getMessage();
+			$errors[] = $e -> getMessage();
 		}
 		try
 		{
-			$item->setStock($stock);
+			$item -> setStock($stock);
 		}
 		catch (Exception $e)
 		{
-			$errors[] = $e->getMessage();
+			$errors[] = $e -> getMessage();
 		}
 		try
 		{
-			$item->setPrice($price);
+			$item -> setPrice($price);
 		}
 		catch (Exception $e)
 		{
-			$errors[] = $e->getMessage();
+			$errors[] = $e -> getMessage();
 		}
 		if(count($errors) == 0)
 		{
-			$name = $db->quote($item->getName());
-			$price = $db->quote($item->getPrice());
-			$stock = $db->quote($item->getStock());
-			$image = $db->quote($item->getImage());
-			$description = $db->quote($item->getDescription());
-			$idCategory = $item->getCategory()->getId();
-			$query = "INSERT INTO item (id_category, name, price, stock, image, description) VALUES('".$idCategory."','".$name."''".$price."''".$stock."''".$image."''".$description."')";
-			$res =  $db->exec($query);
+			$name 			= $db -> quote($item -> getName());
+			$price 			= $db -> quote($item -> getPrice());
+			$stock 			= $db -> quote($item -> getStock());
+			$image 			= $db -> quote($item -> getImage());
+			$description 	= $db -> quote($item -> getDescription());
+			$idCategory 	= $item -> getCategory() -> getId();
+			$query 			= '	INSERT INTO item (id_category, name, price, stock, image, description)
+								VALUES('.$idCategory.','.$name.','.$price.','.$stock.','.$image.','.$description.')';
+			$res 			= $db -> exec($query);
+
 			if($res)
 			{
-				$id = $db->lastInsertId();
+				$id = $db -> lastInsertId();
 				if($id)
 				{
 					return $this-findByID($id);
 				}
 				else
 				{
-					return "Internal server Error";
+					throw new Exception('Internal server Error');
 				}
 			}
 		}
 	}
-	public function getDelete(Item $item)
+
+
+	// Read all items
+	public function read($n = 0, $filter = 'name', $order = 'ASC')
 	{
-		$id = $item->getId();
-		$query = "DELETE FROM item WHERE id='".$id."'";
-		$res = $db->exec($query);
-		return "internal Server Error";
-	}
-	public function edit(Item $item)
-	{
-		$idCategory = $item->getCategory()->getId();
-		$id = intval($id);
-		$name = $db->quote($item->getName());
-		$price = $db->quote($item->getPrice());
-		$stock = $db->quote($item->getStock());
-		$image = $db->quote($item->getImage());
-		$description = $db->quote($item->getDescription());
-		$query = "UPDATE item SET name='".$name."', price='".$price."', stock='".$stock."',image='".$image."', description='".$description."', id_category='".$idCategory."' WHERE id='".$id."' ";
-		$res = $db->exec($query);
-		if($res)
+		$n = intval($n);
+		$filter = $this -> db -> quote($filter);
+
+		if ($n > 0)
 		{
-			$id = $db->lastInsertId();
-			if($id)
-			{
-				return $this-findByID($id);
-			}
-			else
-			{
-				return "Internal server Error";
-			}
+			$query = '	SELECT *
+						FROM item
+						ORDER BY '.$filter.' DESC
+						LIMIT '.$n;
+		}
+		else
+		{
+			$query = '	SELECT *
+						FROM item
+						ORDER BY '.$filter.' DESC';
+		}
+
+		$res 	= $this -> db -> query($query);
+
+		if ($res)
+		{
+			$users = $res -> fetchAll(PDO::FETCH_CLASS, 'Item', array($this -> db));
+			return $users;
+		}
+		else
+		{
+			throw new Exception('Database error');
 		}
 	}
 
-	public function getLast()
-	{
-		$query = "SELECT * FROM item ORDER BY date DESC LIMIT 20";
-		$res = $db->exec($query);
-		$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
-		return $listItem;
-	}
 
-	public function getByCategory(Category $category, $filter="name", $order="ASC")
+	// Read items by category
+	public function readByCategory(Category $category, $filter = 'name', $order = 'ASC')
 	{
-		if($filter == "name" || $filter == "price" || )
+		$idCategory = $category -> getId();
+		$query 		= '	SELECT * FROM item
+						WHERE id_category='.$idCategory.'
+						ORDER BY '.$filter.' '.$order;
+		$res 		= $this -> db -> query($query);
+
+		if ($res)
 		{
-			if($order == "ASC" || $order == "DESC")
-			{
-				$idCategory = $category->getId();
-				$query = "SELECT * FROM item WHERE id_category='".$idCategory."' ORDER BY '".$filter."' '".$order."'";
-				$res = $this->db->query($query);
-				$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
-				return $listItem;
-			}
+			$items 	= $res -> fetchAll(PDO::FETCH_CLASS, 'Item', array($this -> db));
+			return $items;
+		}
+		else
+		{
+			throw new Exception('Database error');
 		}
 	}
-	public function getByName($order="ASC")
-	{
-		if($order == "ASC" || $order == "DESC")
-			{
-			$query = "SELECT * FROM item ORDER BY name '".$order."'";
-			$res = $this->db->query($query);
-			$listItem = $res->fetchAll(PDO::FETCH_CLASS, "Item", array($this->db));
-			return $listItem;
-			}
-	}
+
+
+	// Read item by name
 	public function readByName($name)
 	{
-		$name = $db->quote($item->getName());
-		$query = "SELECT * FROM item WHERE name='".$name."'";
-		$res = $this->db->query($query);
+		$name 	= $this -> db -> quote($item -> getName());
+		$query 	= 'SELECT * FROM item WHERE name='.$name;
+		$res 	= $this -> db -> query($query);
+
 		if($res)
 		{
-			$item = $res->fetchObject("Item", array($this->db));
+			$item = $res -> fetchObject('Item', array($this -> db));
+
 			if ($item)
 			{
 				return $item;
 			}
 			else
 			{
-				return "Item not found";
+				throw new Exception('Item not found');
 			}
 		}
 		else
 		{
-			return "Internal Server Error";
+			throw new Exception('Internal Server Error');
+		}
+	}
+
+
+	// Update item
+	public function update(Item $item)
+	{
+		$idCategory 	= $item -> getCategory() -> getId();
+		$id 			= intval($id);
+		$name 			= $this -> db -> quote($item -> getName());
+		$price 			= $this -> db -> quote($item -> getPrice());
+		$stock 			= $this -> db -> quote($item -> getStock());
+		$image 			= $this -> db -> quote($item -> getImage());
+		$description 	= $this -> db -> quote($item -> getDescription());
+		$query 			= '	UPDATE item
+							SET name='.$name.',
+								price='.$price.',
+								stock='.$stock.',
+								image='.$image.',
+								description='.$description.',
+								id_category='.$idCategory.'
+							WHERE id='.$id;
+		$res 			= $this -> db -> exec($query);
+
+		if($res)
+		{
+			$id = $this -> db -> lastInsertId();
+
+			if($id)
+			{
+				return $this -> findByID($id);
+			}
+			else
+			{
+				throw new Exception('Internal server Error');
+			}
+		}
+	}
+
+
+	// Delete item
+	public function delete(Item $item)
+	{
+		$id 	= $item -> getId();
+		$query 	= 'DELETE FROM item WHERE id='.$id;
+		$res 	= $this -> db -> exec($query);
+
+		if ($res)
+		{
+			return true;
+		}
+		else
+		{
+			throw new Exception('Database error');
 		}
 	}
 }
