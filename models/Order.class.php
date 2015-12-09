@@ -14,6 +14,7 @@ class Order
 	private $date_pay;
 	private $date_send;
 	private $date_recption;
+	private $item_list;
 
 	public function __construct($db)
 	{
@@ -51,6 +52,11 @@ class Order
 	public function getDateReception()
 	{
 		return $this->dateReception;
+	}
+	public function getListItem()
+	{
+		$query = "SELECT * FROM link_order_item WHERE $id_order= '".$id."'"
+		return $this->listItem;
 	}
 
 					/*	SETER*/
@@ -109,20 +115,21 @@ class Order
 		$this->dateReception = $dateReception;
 		return true;
 	}
-	public function addLinkOrderItem(Item $item, Order $order, $quantity, $price)
+	public function addItem(Item $item, $quantity, $price)
 	{
 		$idItem = $item->getId();
-		$idOrder = $order->getId();
+		$idOrder = $this->getId();
 		$quantity = intval($quantity);
 		$price = ($item->getPrice())*$quantity;
+		/*$this->item_list[] = array('quantity'=>$quantity,'price'=>$price,'item'=>$item);*/
 		$query = "INSERT INTO link_order_item (id_order, id_item, quantity, price) VALUES('".$idItem."','".$idOrder."', '".$quantity."', '".$price."')";
-		$res =  $db->exec($query);
+		$res =  $this->db->exec($query);
 		if($res)
 		{
-			$id = $db->lastInsertId();
+			$id = $this->db->lastInsertId();
 			if($id)
 			{
-				return $this-findByID($id);
+				return $this->findByID($id);
 			}
 			else
 			{
