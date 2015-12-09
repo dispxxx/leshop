@@ -68,7 +68,7 @@ class Order
 				$this->item_list[] = array ('item'=>$list[$i], 'quantity'=$list[$i]->quantity);
 				$i++;
 			}
-			return $this->itemList;
+			return $this->item_list;
 			
 		}
 	}
@@ -154,6 +154,33 @@ class Order
 		}
 		/*var_dump($this);*/
 		// $this->item_list 4
+	}
+	public function updateItem(Item $item, $quantity)
+	{
+		if()
+			obj dans panier
+			if qqt=0 ->supr
+		$idItem = $item->getId();
+		$idOrder = $this->getId();
+		$quantity = intval($quantity);
+		$price = ($item->getPrice())*$quantity;
+		/*marche pas*/
+		if
+		$this->item_list[] = array('quantity'=>$quantity,'price'=>$price,'item'=>$item);
+		$query = "UPDATE link_order_item (id_order, id_item, quantity, price) VALUES('".$idItem."','".$idOrder."', '".$quantity."', '".$price."')";
+		$res =  $this->db->exec($query);
+		if($res)
+		{
+			$id = $this->db->lastInsertId();
+			if($id)
+			{
+				return $this->findByID($id);
+			}
+			else
+			{
+				return "Internal server Error";
+			}
+		}
 	}
 }
 
