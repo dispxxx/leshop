@@ -215,14 +215,7 @@ class User
 	// Check user password
 	public function checkPassword($password)
 	{
-		if (password_verify($password, $this -> hash))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return password_verify($password, $this -> hash);
 	}
 }
 ?>
