@@ -31,7 +31,7 @@ if (isset($_SESSION['id']))
 }
 
 // Pages
-$access_public 	= array('login', 'register', 'home', 'category');
+$access_public 	= array('login', 'register', 'home', 'category', 'categories');
 $access_user 	= array('logout', 'home', 'category', 'categories', 'profil', 'basket');
 $access_admin	= array('dashboard',
 						'dashboard_users',
