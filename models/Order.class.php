@@ -17,10 +17,17 @@ class Order
 	private $date_pay;
 	private $date_send;
 	private $date_reception;
+<<<<<<< HEAD
 	private $items = array();
 	private $db;
 
 
+=======
+	private $items;
+	private $db;
+
+
+>>>>>>> origin/master
 	// Constructor
 	public function __construct($db)
 	{
@@ -86,17 +93,26 @@ class Order
 	}
 	public function getItems()
 	{
+<<<<<<< HEAD
 		if(empty($this -> items))
+=======
+		if(!$this -> items)
+>>>>>>> origin/master
 		{
 			$query = '	SELECT item.*,quantity
 						FROM link_order_item
 						LEFT JOIN item
 						ON item.id=link_order_item.id_item
+<<<<<<< HEAD
 						WHERE id_order= '.$this -> id;
+=======
+						WHERE $id_order= '.$this -> id;
+>>>>>>> origin/master
 
 			$res = $this -> db -> query($query);
 
 			if ($res)
+<<<<<<< HEAD
 			{
 				$items = $res -> fetchAll(PDO::FETCH_CLASS, "Item", array($this -> db));
 
@@ -152,8 +168,32 @@ class Order
 			// $db->exec
 			$this->items = array();
 			return $this->getItems();
+=======
+			{
+				$items = $res -> fetchAll(PDO::FETCH_CLASS, "Item", array($this -> db));
+
+				if ($items)
+				{
+					$this -> items = $items;
+				}
+				else
+				{
+					throw new Exception('Database error');
+				}
+			}
+			else
+			{
+				throw new Exception('Database error');
+			}
+>>>>>>> origin/master
 		}
+		return $this -> items
 	}
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
 	// Setters
 	public function setUser(User $user)
 	{
