@@ -157,7 +157,14 @@ class UserManager
 		if ($res)
 		{
 			$users = $res -> fetchObject('User', array($this -> db));
-			return $users;
+			if($users)
+			{
+				return $users;
+			}
+			else
+			{
+				throw new Exception('Email doesn\'t exist');
+			}
 		}
 		else
 		{
