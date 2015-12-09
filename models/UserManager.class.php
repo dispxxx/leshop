@@ -70,22 +70,24 @@ class UserManager
 
 
 	// Read all users
-	public function read($n = 0)
+	public function read($n = 0, $filter='date_registration', $order = 'ASC')
 	{
-		$n = intval($n);
+		$n 		= intval($n);
+		$filter = $this -> db -> quote($filter);
+		$order 	= $this -> db -> quote($order);
 
 		if ($n > 0)
 		{
 			$query = '	SELECT *
 						FROM user
-						ORDER BY `date_registration` ASC
+						ORDER BY '.$filter.' '.$order'
 						LIMIT '.$n;
 		}
 		else
 		{
 			$query = '	SELECT *
 						FROM user
-						ORDER BY `date_registration` ASC';
+						ORDER BY '.$filter.' '.$order;
 		}
 
 		$res 	= $this -> db -> query($query);
