@@ -15,7 +15,6 @@ if (isset($_GET['page']))
 			}
 			catch (Exception $e)
 			{
-				var_dump($e);
 				$errors[] = $e -> getMessage();
 			}
 
