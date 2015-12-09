@@ -30,6 +30,9 @@ class OrderManager
 	}
 	public function editPrice(Order $order)
 	{
+		// $list = $order->getItems();
+		// sum prix * quantity
+		// update
 		$id = $order->getId();
 		$query = "SELECT price FROM link_order_item";
 		$res = $this->db->exec($query);
