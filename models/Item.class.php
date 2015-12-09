@@ -1,6 +1,9 @@
 <?php
 class Item
 {
+
+
+	// Properties
 	private $db;
 	private $id;
 	private $id_category;
@@ -11,11 +14,15 @@ class Item
 	private $image;
 	private $description;
 
+
+	// Constructor
 	public function __construct($db)
 	{
 		$this->db = $db;
 	}
-				/*GETER*/
+
+
+	// Getters
 	public function getId()
 	{
 		return $this->id;
@@ -45,7 +52,8 @@ class Item
 		return $this->description;
 	}
 
-					/*	SETER*/
+
+	// Setters
 	public function setCategory(Category $category)
 	{
 		$this->category = $category;
@@ -90,7 +98,26 @@ class Item
 	}
 	public function setImage($image)
 	{
-
+		if ( $image_proprietes = @getimagesize($image) )
+		{
+			if ($image_proprietes[0] > 800 || $image_proprietes[1] > 800)
+			{
+				throw new Exception("Invalid image dimensions (max 800px wide, 800px high)");
+			}
+			else if (@filesize($image) > 1e6)
+			{
+				throw new Exception("Invalid image size (max 1 MB)");
+			}
+			else
+			{
+				$this -> image = $image;
+				return true;
+			}
+		}
+		else
+		{
+			throw new Exception("Invalid filetype");
+		}
 	}
 	public function setDescription($description)
 	{
