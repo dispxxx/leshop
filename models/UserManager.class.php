@@ -41,7 +41,7 @@ class UserManager
 			$surname 	= $this -> db -> quote($user -> getSurname());
 			$hash 		= $user -> getHash();
 			$query		= '	INSERT INTO user (email, name, surname, hash)
-							VALUES ('.$email.','.$name.','.$surname.','.$hash.')';
+							VALUES ('.$email.','.$name.','.$surname.',"'.$hash.'")';
 			$res		= $this -> db -> exec($query);
 
 			if ($res)
