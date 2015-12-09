@@ -23,8 +23,11 @@
 				<div class="form-group col-xs-12 col-sm-4">
 					<label for="new_category" class="control-label">Category:</label>
 					<select name="new_category" class="form-control">
-						<option value="0" <?php if($user -> getStatus() == 0) echo 'selected' ?>>Standard</option>
-						<option value="2" <?php if($user -> getStatus() > 0) echo 'selected' ?>>Administrator</option>
+						<?php for ($i = 0, $c = count($categories); $i < $c; $i++){ ?>
+							<option value=<?php echo($categories[$i] -> getId()) ?>>
+								<?php echo htmlentities($categories[$i] -> getName()) ?>
+							</option>
+						<?php } ?>
 					</select>
 				</div>
 			</div>

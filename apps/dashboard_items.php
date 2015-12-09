@@ -1,8 +1,8 @@
 <?php
 	$itemManager 		= new ItemManager($db);
-	$categoryManager 	= new CategoryManager($db):
+	$categoryManager 	= new CategoryManager($db);
 	$items 				= $itemManager -> read();
-	$category 			= $categoryManager -> read();
+	$categories 		= $categoryManager -> read();
 
 	require('views/dashboard_items.phtml');
 ?>

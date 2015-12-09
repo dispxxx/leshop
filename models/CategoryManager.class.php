@@ -62,22 +62,24 @@ class CategoryManager
 
 
 	// Read categories
-	public function read($n = 0)
+	public function read($n = 0, $filter = 'name', $order = 'DESC')
 	{
-		$n = intval($n);
+		$n 		= intval($n);
+		$filter = $this -> db -> quote($filter);
+		$order 	= $this -> db -> quote($order);
 
 		if ($n > 0)
 		{
 			$query = '	SELECT *
 						FROM category
-						ORDER BY `name` ASC
+						ORDER BY '.$filter.' '.$order.'
 						LIMIT '.$n;
 		}
 		else
 		{
 			$query = '	SELECT *
 						FROM category
-						ORDER BY `name` ASC';
+						ORDER BY '.$filter.' '.$order;
 		}
 
 		$res 	= $this -> db -> query($query);
@@ -98,12 +100,14 @@ class CategoryManager
 	public function readById($id)
 	{
 		$id 	= intval($id);
-		$query 	= "SELECT * FROM category WHERE id='".$id."'";
-		$res 	= $this -> db -> exec($query);
+		$query 	= "SELECT * FROM category WHERE id=".$id;
+		$res 	= $this -> db -> query($query);
+
 		if($res)
 		{
 			$category = $res -> fetchObject("Category", array($this -> db));
-			if($rubrique)
+
+			if($category)
 			{
 				return $category;
 			}
