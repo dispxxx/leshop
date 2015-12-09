@@ -1,13 +1,10 @@
 <?php
-	$category = new CategoryManager($db);
-	$listCategory = $category->sortByName();
-	$i = 0;
-	while (isset($listCategory[$i]))
+	$categoryManager = new CategoryManager($db);
+	$categories = $categoryManager->read();
+
+	for ($i = 0, $c = count($categories); $i < $c; $i++)
 	{
-		$category = $listCategory[$i];
-		require("views/categories.phtml"); 
-		
-		$i++;
+		$category = $categories[$i];
+		require ('views/categories.phtml');
 	}
 ?>
-

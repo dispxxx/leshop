@@ -1,1 +1,10 @@
-<h2>categories</h2>
+<h1>Categories</h1>
+<section class="row">
+	<a class="row Categories-index" href="index.php?page=Categories&id=<?=$Categories->getId()?>">
+		<figure class="col-md-1"></figure>
+		<h3><?=htmlentities($category->getName())?></h3>
+		<p><?=htmlentities($category->getDescription())?></p>
+	</a>
+	
+	<?php require('apps/category.php'); ?>
+</section>
