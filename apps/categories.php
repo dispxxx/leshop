@@ -1,3 +1,3 @@
 <?php 
-	require("categories.phtml"); 
+	require("views/categories.phtml"); 
  ?>
