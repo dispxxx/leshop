@@ -1,0 +1,11 @@
+<div class="row">
+	<div class="col-md-3">
+		<img class="imgItem" src="<?=$item->getImage(); ?>" alt="img" style="max-width:100%">
+	</div>
+	<div class="col-md-9">
+		<a href="?page=item&id=<?=$item->getId();?>">
+			<h4><?=$item->getName(); ?></h4>
+			<p><?=$item->getDescription(); ?></p>
+		</a>
+	</div>
+</div>
