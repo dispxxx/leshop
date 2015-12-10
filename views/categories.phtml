@@ -1,11 +1,6 @@
-<h1>Categories</h1>
-<?php var_dump($categories) ?>
 <section class="row">
-	<a class="row Categories-index" href="index.php?page=Categories&id=<?=$Categories->getId()?>">
-		<figure class="col-md-1"></figure>
+	<a class="row Categories-index" href="?page=category&id=<?=$category->getId()?>">
 		<h3><?=htmlentities($category->getName())?></h3>
 		<p><?=htmlentities($category->getDescription())?></p>
 	</a>
-	
-	<?php require('apps/category.php'); ?>
 </section>
