@@ -3,5 +3,6 @@
 	{
 		$item = $items[$i];
 		require('views/dashboard_item.phtml');
+		var_dump($item);
 	}
 ?>
