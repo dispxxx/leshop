@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-	$itemManager = new itemManager($db);
+	$itemManager = new ItemManager($db);
 	$items = $itemManager->readByCategory($category);
-	/*var_dump($items);*/
+	
 	$i = 0;
 	$c = count($items);
 	while ($i < $c)
