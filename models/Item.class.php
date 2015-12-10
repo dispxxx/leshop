@@ -73,19 +73,19 @@ class Item
 		}
 		else
 		{
-			throw new Exception("vous devez rentrer un nom de moins de 32caractères");
+			throw new Exception("Name : needs to be 30 characters or less");
 		}
 	}
 	public function setPrice($price)
 	{
 		if (ctype_digit($price))
 		{
-			$this -> price = $price;
+			$this -> price = floatval($price);
 			return true;
 		}
 		else
 		{
-			throw new Exception("vous devez rentrer un nombre");
+			throw new Exception("Price : needs to be a number");
 		}
 	}
 	public function setStock($stock)
@@ -97,7 +97,7 @@ class Item
 		}
 		else
 		{
-			throw new Exception("vous devez rentrer un nombre");
+			throw new Exception("Stock : needs to be a number");
 		}
 	}
 	public function setImage($image)

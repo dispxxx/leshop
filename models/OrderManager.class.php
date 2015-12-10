@@ -165,32 +165,17 @@ class OrderManager
 	// Delete order
 	public function delete (Order $order)
 	{
+		$id 	= intval($order -> getId());
+		$query 	= 'DELETE FROM order WHERE id = '.$id;
+		$res 	= $this -> db -> exec($query);
 
-	}
-
-
-	// Update order price
-	public function updatePrice(Order $order)
-	{
-		$id 		= $order -> getId();
-		$query 		= 'SELECT price FROM link_order_item WHERE id_order = '.$id;
-		$res 		= $this -> db -> query($query);
-		$prices 	= $res -> fetchAll(PDO::FETCH_CLASS, "Link_order_item", array($this -> db));
-
-		/* utiliser le tableau $listPrice, additionner tous les résultats et obtenir $price*/
-		$query = "UPDATE order SET price='".$price."' WHERE id='".$id."' ";
-		$res = $db -> exec($query);
-		if($res)
+		if ($res)
 		{
-			$id = $db -> lastInsertId();
-			if($id)
-			{
-				return $this-findByID($id);
-			}
-			else
-			{
-				return "Internal server Error";
-			}
+			return true;
+		}
+		else
+		{
+			throw new Exception('Internal server error');
 		}
 	}
 }

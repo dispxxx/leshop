@@ -81,7 +81,7 @@ class ItemManager
 
 			if($res)
 			{
-				$id = $this -> db	 -> lastInsertId();
+				$id = $this -> db -> lastInsertId();
 				if($id)
 				{
 					return $this-> readByID($id);
@@ -132,7 +132,7 @@ class ItemManager
 	// Read item by ID
 	public function readById($id)
 	{
-		$query 	= 'SELECT * FROM user WHERE id = '.$id;
+		$query 	= 'SELECT * FROM item WHERE id = '.$id;
 		$res 	= $this -> db -> query($query);
 
 		if ($res)
