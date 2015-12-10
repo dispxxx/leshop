@@ -164,7 +164,7 @@ class CategoryManager
 	// Update category
 	public function update(Category $category)
 	{
-		$id = $this -> db -> intval($category -> getId());
+		$id = intval($category -> getId());
 		$name = $this -> db -> quote($category -> getName());
 		$description = $this -> db -> quote($category -> getDescription());
 
@@ -187,13 +187,14 @@ class CategoryManager
 		$id = $this -> db -> quote($category -> getId());
 		$query = "DELETE FROM category WHERE id='".$id."'";
 		$res = $this -> db -> exec($query);
+		
 		if($res)
 		{
 			return true;
 		}
 		else
 		{
-			return "Error";
+			throw new Exception('Internal server error');
 		}
 	}
 }

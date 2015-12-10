@@ -93,7 +93,6 @@ class Order
 						LEFT JOIN item
 						ON item.id=link_order_item.id_item
 						WHERE id_order= '.$this -> id;
-
 			$res = $this -> db -> query($query);
 
 			if ($res)
@@ -102,12 +101,9 @@ class Order
 
 				if ($items)
 				{
-					$i = 0;
-					$len = count($items);
-					while ($i < $len)
+					for ($i=0, $c = count($items); $i < $c; $i++)
 					{
-						$this->items[] = array('item'=>$items[$i], 'quantity'=>$items[$i]->quantity);
-						$i++;
+						$this -> items[] = array('item'=>$items[$i], 'quantity'=>$items[$i] -> quantity);
 					}
 				}
 				else
@@ -123,37 +119,69 @@ class Order
 		return $this -> items;
 	}
 
+
+	// Update item in order
 	public function updateItem(Item $item, $quantity)
 	{
 		if ($quantity <= 0)
 		{
-			$query = "DELETE FROM link_order_item WHERE id_order='".$this->id."' AND id_item='".$item->getId()."'";
-			//
-			$this->items = array();
-			return $this->getItems();
+			$query 	= "	DELETE FROM link_order_item
+						WHERE id_order='".$this -> id."'
+						AND id_item='".$item -> getId()."'";
+			$res 	= $this -> db -> exec($query);
+
+			if ($res)
+			{
+				$this -> items = array();
+				return $this -> getItems();
+			}
+			else
+			{
+				throw new Exception('Database error');
+			}
 		}
 		else
 		{
-			$list = $this->getItems();
-			$i = 0;
-			$len = count($list);
-			while ($i < $len)
+			$items = $this -> getItems();
+
+			for ($i=0, $c = count($items); $i < $c; $i++)
 			{
-				if ($list[$i]->getId() == $item->getId())
+				if ($items[$i] -> getId() == $item -> getId())
 				{
-					$query = "UPDATE link_order_item SET quantity='".intval($quantity)."' WHERE id_order='".$this->id."' AND id_item='".$item->getId()."'";
-					// $db->exec
-					$this->items = array();
-					return $this->getItems();
+					$query = "	UPDATE link_order_item
+								SET quantity='".intval($quantity)."'
+								WHERE id_order='".$this -> id."'
+								AND id_item='".$item -> getId()."'";
+					$res 	= $this -> db -> exec($query);
+
+					if ($res)
+					{
+						$this -> items = array();
+						return $this -> getItems();
+					}
+					else
+					{
+						throw new Exception('Database error');
+					}
 				}
-				$i++;
 			}
-			$query = "INSERT INTO link_order_item (id_order, id_item, quantity) VALUES('".$this->id."', '".$item->getId()."', '".intval($quantity)."')";
-			// $db->exec
-			$this->items = array();
-			return $this->getItems();
+			$query 	= "	INSERT INTO link_order_item (id_order, id_item, quantity)
+						VALUES('".$this -> id."', '".$item -> getId()."', '".intval($quantity)."')";
+			$res 	= $this -> db -> exec($query);
+
+			if ($res)
+			{
+				$this -> items = array();
+				return $this -> getItems();
+			}
+			else
+			{
+				throw new Exception('Database error');
+			}
 		}
 	}
+
+
 	// Setters
 	public function setUser(User $user)
 	{
