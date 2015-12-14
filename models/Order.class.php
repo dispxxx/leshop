@@ -235,4 +235,5 @@ class Order
 		$this -> dateReception = $dateReception;
 		return true;
 	}
+}
 ?>
