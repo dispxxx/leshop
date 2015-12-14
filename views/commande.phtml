@@ -1,0 +1,17 @@
+<h2>Informations de commande</h2>
+<div class="commande">
+	<form action="?page=commande" method="POST">
+		<div class="commandeLivraison">
+			<h4>Adresse de livraison</h4>
+			<label for="street">Street : </label>
+			<input type="text" value="<?=htmlentities($street) ?>"><br>
+			<label for="city">City : </label>
+			<input type="text" value="<?=htmlentities($city) ?>"><br>
+			<label for="citycode">Citycode :</label>
+			<input type="text" value="<?=htmlentities($citycode) ?>"><br>
+			<label for="country">Country : </label>
+			<input type="text" value="<?=htmlentities($country) ?>"><br>
+		</div>
+		<button type="submit" class="valider">Valider</button>
+	</form>
+</div>

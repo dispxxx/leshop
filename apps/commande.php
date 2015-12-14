@@ -1,0 +1,20 @@
+<?php 
+if(isset($_POST['$street']))
+	$street=$_POST['$street'];
+else
+	$street='';
+if(isset($_POST['$city']))
+	$city=$_POST['$city'];
+else
+	$city='';
+if(isset($_POST['$citycode']))
+	$citycode=$_POST['$citycode'];
+else
+	$citycode='';
+if(isset($_POST['$country']))
+	$country=$_POST['$country'];
+else
+	$country='';
+
+	require('views/commande.phtml')
+ ?>

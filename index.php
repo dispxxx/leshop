@@ -31,8 +31,8 @@ if (isset($_SESSION['id']))
 }
 
 // Pages
-$access_public 	= array('login', 'register', 'home', 'category', 'categories', 'item');
-$access_user 	= array('logout', 'home', 'category', 'categories', 'profil', 'basket', 'item');
+$access_public 	= array('login', 'register', 'home', 'category', 'categories', 'item', 'commande');
+$access_user 	= array('logout', 'home', 'category', 'categories', 'profil', 'basket', 'item', 'commande');
 $access_admin	= array('dashboard',
 						'dashboard_users',
 						'dashboard_category',
@@ -44,7 +44,7 @@ $access_admin	= array('dashboard',
 // Handlers
 $handlers_public 	= array('login' 	=> 'user',
 							'register' 	=> 'user');
-$handlers_user 		= array();
+$handlers_user 		= array('commande'	=> 'address');
 $handlers_admin		= array('dashboard_users' 		=> 'user',
 							'dashboard_items' 		=> 'item',
 							'dashboard_order' 		=> 'order',
