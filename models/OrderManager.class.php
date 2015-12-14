@@ -97,6 +97,30 @@ class OrderManager
 			return "Error";
 		}
 	}
+	public function readByIdUser($idUser)
+	{
+		$idUser 	= intval($idUser);
+		$query 	= "SELECT * FROM `order` WHERE id_user='".$idUser."'";
+		$res 	= $this -> db -> query($query);
+
+		if($res)
+		{
+			$order = $res -> fetchObject("Order", array($this -> db));
+
+			if($order)
+			{
+				return $order;
+			}
+			else
+			{
+				return "Order not found";
+			}
+		}
+		else
+		{
+			return "Error";
+		}
+	}
 
 
 	// Read order by user (option: status)
