@@ -1,0 +1,7 @@
+<h4><?=$item->getName(); ?></h4>
+<p><?=$item->getDescription(); ?></p>
+<div class="row">
+	<div class="col-md-4"><p>Prix unitaire : <?=$item->getPrice(); ?></p></div>
+	<div class="col-md-4"><p>quantité : <?=$item->quantity; ?></p></div>
+	<div class="col-md-4"><p>total : <?=($item->getPrice())*($item->quantity); ?> </p></div>
+</div>
