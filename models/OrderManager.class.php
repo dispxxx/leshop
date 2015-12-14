@@ -79,11 +79,11 @@ class OrderManager
 		$query 	= "SELECT * FROM order WHERE id=".$id;
 		$res 	= $this -> db -> query($query);
 
-		if($res)
+		if ($res)
 		{
 			$order = $res -> fetchObject("Order", array($this -> db));
 
-			if($order)
+			if ($order)
 			{
 				return $order;
 			}
@@ -99,7 +99,53 @@ class OrderManager
 	}
 
 
-	// Read order by id user
+	// Read order by user (option: status)
+	public function readByUser(User $user, $status = -1)
+	{
+		if ($status >= 0)
+		{
+			$query = '	SELECT *
+						FROM order
+						WHERE id_user = '.$user -> getId().'
+						AND status = '.$status;
+		}
+		else
+		{
+			$query = '	SELECT *
+						FROM order
+						WHERE id_user = '.$user -> getId();
+		}
+
+		$res = $this -> db -> query($query);
+
+		if ($res)
+		{
+			if ($status >= 0)
+			{
+				$order = $res -> fetchObject('Order', array($this -> db));
+				if ($order)
+				{
+					return $order;
+				}
+				else
+				{
+					throw new Exception('No order found');
+				}
+			}
+			else
+			{
+				$orders = $res -> fetchAll(PDO::FETCH_CLASS, 'Order', array($this -> db));
+				if ($orders)
+				{
+					return $orders;
+				}
+				else
+				{
+					throw new Exception('Internal server error');
+				}
+			}
+		}
+	}
 
 
 
