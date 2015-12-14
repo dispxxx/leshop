@@ -235,5 +235,20 @@ class Order
 		$this -> dateReception = $dateReception;
 		return true;
 	}
+	public function getItemLIst($order)
+	{
+		$query = "SELECT * FROM link_order_item where id_order = '".$order."'";
+		$res 	= $this -> db -> query($query);
+
+		if ($res)
+		{
+			$link = $res -> fetchAll(PDO::FETCH_CLASS, 'item_link_item', array($this -> db));
+			return $link;
+		}
+		else
+		{
+			throw new Exception('Database error');
+		}
+	}
 }
 ?>
